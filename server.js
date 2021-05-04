@@ -30,16 +30,7 @@ async function checkAvailability() {
 }
 
 function getSlotsForDate(DATE) {
-    let config = {
-        method: 'get',
-        url: 'https://cdn-api.co-vin.in/api/v2/appointment/sessions/public/findByPin?pincode=' + PINCODE + '&date=' + DATE,
-        headers: {
-            'accept': 'application/json',
-            'Accept-Language': 'hi_IN'
-        }
-    };
-
-    axios(config)
+    axios.get('https://cdn-api.co-vin.in/api/v2/appointment/sessions/public/findByPin?pincode=' + PINCODE + '&date=' + DATE)
         .then(function (slots) {
             let sessions = slots.data.sessions;
             let validSlots = sessions.filter(slot => slot.min_age_limit <= AGE &&  slot.available_capacity > 0)
@@ -90,7 +81,7 @@ async function fetchNext10Days(){
 
 main()
     .then(() => {
-        const msg = 'Vaccine availability checker started.'
+        const msg = 'Vaccine availability Checker Started.'
         console.log(msg);
         bot.sendMessage(chatId, msg);
     });
